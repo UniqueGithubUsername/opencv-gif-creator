@@ -8,15 +8,19 @@ steps = 100
 size_x = 1024
 size_y = 512
 images= []
+images2= []
 
 for i in range(steps):
     img = np.zeros((size_y,size_x,3), np.uint8)
+    old = np.zeros((size_y,size_x,3), np.uint8)
+    if (i!=0):
+        old += images2[-1]
 
     font                   = cv2.FONT_HERSHEY_DUPLEX
-    fontScale              = 1
+    fontScale              = 2
     fontColor              = ((255/steps)*i,(255/steps)*i,(255/steps)*i) # black to white
-    thickness              = 1
-    lineType               = 1
+    thickness              = 2
+    lineType               = 2
     text_width, text_height = cv2.getTextSize(text, font, fontScale, lineType)[0]
     print(text_width)
     #bottomLeftCornerOfText = (int(size_x/2-0.5*text_width),int(size_y/2+0.5*text_height)) # middle
@@ -30,7 +34,16 @@ for i in range(steps):
     thickness,
     lineType)
 
+    cv2.putText(old,text, 
+    bottomLeftCornerOfText, 
+    font, 
+    fontScale,
+    fontColor,
+    thickness,
+    lineType)
+
     images.append(img)
+    images2.append(old)
 
 # Display the image
 cv2.imshow('img',img)
@@ -41,3 +54,4 @@ cv2.waitKey(0)
 
 # Save as .gif
 imageio.mimsave('mygif.gif', images, format='GIF')
+imageio.mimsave('mygif2.gif', images2, format='GIF')
