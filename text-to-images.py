@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 import imageio
+from PIL import Image, ImageDraw, ImageFont
 
 text = 'HELLO WORLD'
 steps = 100
